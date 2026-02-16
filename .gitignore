@@ -1,0 +1,79 @@
+# === COMPILED OUTPUT ===
+# Binary executable (THIS IS THE IMPORTANT ONE FOR GREC)
+grec
+ocr_capture
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Build directories
+build/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# === DEVELOPMENT ===
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+*.code-workspace
+
+# Compile logs
+*.log
+compile_commands.json
+
+# === PROJECT-SPECIFIC ===
+# Don't commit test recordings (if any are in project dir)
+*.mkv
+*.mp4
+*.webm
+*.avi
+
+# Don't commit local config
+*.conf
+config.ini
+
+# === OS FILES ===
+# Linux
+.directory
+*.bak
+
+# MacOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# === GIT ===
+*.orig
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_merged.txt
+
+# === TEMP FILES ===
+*.tmp
+*.temp
+*.cache
+*.pid
