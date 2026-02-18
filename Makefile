@@ -1,21 +1,51 @@
+# Compiler
 CXX = g++
-CXXFLAGS = `pkg-config --cflags gtk+-3.0` -Wall -O2
-LIBS = `pkg-config --libs gtk+-3.0` -lX11
-TARGET = grec
-SOURCES = main.cpp
+CXXFLAGS = -std=c++11 -Wall -O2 -Wno-unused-result
 
-all: $(TARGET)
+# Package config flags
+GTKFLAGS = `pkg-config --cflags --libs gtk+-3.0`
+X11FLAGS = `pkg-config --cflags --libs x11`
 
-$(TARGET): $(SOURCES)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)
+# Targets
+TARGETS = grec grec_prefs
 
+# Default target
+all: $(TARGETS)
+
+# Recorder (main.cpp)
+grec: main.cpp
+	$(CXX) $(CXXFLAGS) main.cpp -o grec $(GTKFLAGS) $(X11FLAGS)
+
+# Preferences app (grec_prefs.cpp)
+grec_prefs: grec_prefs.cpp
+	$(CXX) $(CXXFLAGS) grec_prefs.cpp -o grec_prefs $(GTKFLAGS)
+
+# Clean build files
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGETS)
 
-install: $(TARGET)
-	sudo install -m 755 $(TARGET) /usr/local/bin/
+# Install to /usr/local/bin (optional)
+install: $(TARGETS)
+	cp grec /usr/local/bin/
+	cp grec_prefs /usr/local/bin/
 
+# Uninstall (optional)
 uninstall:
-	sudo rm -f /usr/local/bin/$(TARGET)
+	rm -f /usr/local/bin/grec /usr/local/bin/grec_prefs
 
-.PHONY: all clean install uninstall
+# Rebuild everything
+rebuild: clean all
+
+# Help
+help:
+	@echo "Available targets:"
+	@echo "  all        - Build both grec and grec_prefs (default)"
+	@echo "  grec       - Build only the recorder (main.cpp)"
+	@echo "  grec_prefs - Build only the preferences app (grec_prefs.cpp)"
+	@echo "  clean      - Remove built binaries"
+	@echo "  install    - Copy binaries to /usr/local/bin"
+	@echo "  uninstall  - Remove binaries from /usr/local/bin"
+	@echo "  rebuild    - Clean and rebuild"
+	@echo "  help       - Show this help message"
+
+.PHONY: all clean install uninstall rebuild help
