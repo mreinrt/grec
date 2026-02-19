@@ -190,6 +190,8 @@ Now you can start screen recording anywhere in XFCE with a single shortcut and c
 
 ## Project Structure
 
+Structure should looke like this after building:
+```
 grec/
 ├── grec           - Main recorder binary
 ├── grec_prefs     - Standalone preferences binary
@@ -197,6 +199,7 @@ grec/
 ├── grec_prefs.cpp - Preferences GUI source code
 ├── Makefile       - Build configuration
 └── README.md      - This file
+```
 
 * * *
 
