@@ -401,12 +401,17 @@ void start_recording_region(int x, int y, int w, int h) {
         }
         
         // Video codec settings
-        args.push_back("-c:v");
-        args.push_back("mpeg4");
-        args.push_back("-q:v");
-        args.push_back("5");
-        args.push_back("-pix_fmt");
-        args.push_back("yuv420p");
+            args.push_back("-c:v");
+            args.push_back("libx264");
+            args.push_back("-preset");
+            args.push_back("fast");
+            args.push_back("-crf");
+            args.push_back("23");
+            args.push_back("-pix_fmt");
+            args.push_back("yuv420p");
+            // Add this filter to ensure dimensions are even
+            args.push_back("-vf");
+            args.push_back("scale=trunc(iw/2)*2:trunc(ih/2)*2");
         
         // Audio codec settings
         if (config.capture_audio) {
@@ -616,11 +621,14 @@ int main(int argc, char **argv) {
     XGrabKey(d, keycode, ControlMask|ShiftMask,
              root, True, GrabModeAsync, GrabModeAsync);
 
-    indicator = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    // FIXED: Create indicator as a popup window that doesn't appear in taskbar
+    indicator = gtk_window_new(GTK_WINDOW_POPUP);
     gtk_window_set_decorated(GTK_WINDOW(indicator), FALSE);
     gtk_window_set_keep_above(GTK_WINDOW(indicator), TRUE);
     gtk_window_move(GTK_WINDOW(indicator), width-40, 20);
     gtk_window_set_default_size(GTK_WINDOW(indicator), 20, 20);
+    gtk_window_set_accept_focus(GTK_WINDOW(indicator), FALSE); // Prevent focus stealing
+    gtk_window_set_type_hint(GTK_WINDOW(indicator), GDK_WINDOW_TYPE_HINT_UTILITY); // Hint it's not a normal window
 
     GtkWidget *area = gtk_drawing_area_new();
     gtk_container_add(GTK_CONTAINER(indicator), area);

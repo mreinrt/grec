@@ -11,9 +11,15 @@ It is designed for desktop environments like XFCE, providing a quick and lightwe
 ### Core Recording
   * Full-screen or region-based recording
   * Transparent overlay for region selection with **customizable color and transparency**
-  * Red blinking indicator for active recording
+  * Red blinking indicator for active recording (now stays out of your taskbar - no focus stealing!)
   * Hotkey control (Ctrl + Shift + End) to stop recording
   * X/close button stops recording automatically
+
+### New in v2.1 - Facebook Compatibility & UI Improvements
+  * **Facebook-friendly MP4**: Now uses H.264 (libx264) codec instead of mpeg4 for maximum platform compatibility
+  * **Smart scaling**: Automatically adjusts region dimensions to even numbers (required for H.264)
+  * **Optimized encoding**: Uses `-preset fast` and `-crf 23` for perfect balance of quality and performance
+  * **No taskbar flashing**: Recording indicator now uses popup window and doesn't steal focus
 
 ### New in v2.0 - Standalone Preferences App (`grec_prefs`)
   * **Separate GUI preferences application** that can be launched independently
@@ -39,12 +45,15 @@ It is designed for desktop environments like XFCE, providing a quick and lightwe
   * Linux with GTK3 and X11 (tested on Gentoo/XFCE4, should work on other distros)
   * GTK3 development libraries
   * X11 development libraries
-  * FFmpeg installed and available in PATH
+  * FFmpeg installed and available in PATH (with **x264 support** for H.264 encoding)
   * GCC (or compatible C++ compiler)
   * **Optional but recommended**: `pulseaudio-utils` (provides `pactl` for audio source detection)
 
 ### Gentoo example:
 sudo emerge media-video/ffmpeg dev-libs/gtk+:3.0 x11-libs/libX11 media-sound/pulseaudio
+# Make sure x264 USE flag is enabled for ffmpeg:
+echo "media-video/ffmpeg x264" | sudo tee -a /etc/portage/package.use/ffmpeg
+sudo emerge --ask --newuse media-video/ffmpeg
 
 ### Ubuntu/Debian example:
 sudo apt install ffmpeg libgtk-3-dev libx11-dev pulseaudio-utils
@@ -97,7 +106,7 @@ Run the recorder:
   1. A dialog will appear asking you to select **Region Select** or **Full Screen**:
      * **Region Select**: Click and drag to select the area you want to record. The overlay color will match your preferences.
      * **Full Screen**: Recording starts immediately.
-  2. A small **red blinking dot** indicates recording is active.
+  2. A small **red blinking dot** (popup window, not in taskbar) indicates recording is active.
   3. Press **Ctrl + Shift + End** to stop recording.
   4. If enabled in preferences, a dialog will show where the file was saved with options:
      * **Open folder**: Opens your save directory.
@@ -106,6 +115,11 @@ Run the recorder:
 Videos are saved according to your preferences:
   * Default directory: `~/Videos/`
   * Default pattern: `recording_YYYYMMDD_HHMMSS.mp4`
+
+### Important Notes
+  * **MP4 files are now Facebook-compatible!** They use H.264 codec with proper settings
+  * The region selector automatically handles odd-sized selections - no more errors
+  * The recording indicator won't appear in your taskbar or steal focus
 
 * * *
 
@@ -141,6 +155,26 @@ show_notifications=true
   4. Set command to `/usr/local/bin/grec_prefs`
   5. Choose an icon (e.g., `gtk-preferences`)
 
+  OR
+
+### Add to Application's Menu
+  1. Ensure /usr/local/bin/grec_prefs exists
+  2. Navigate to ~/.local/share/applications/
+  3. nano ~/.local/share/applications/grec-preferences.desktop
+  4. Paste the following:
+```
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Grec Settings
+Comment=Configure Grec options
+Exec=/usr/local/bin/grec_prefs
+Icon=gtk-preferences
+Terminal=false
+Categories=AudioVideo;Settings;
+StartupNotify=true
+```
+
 ### Keyboard Shortcut
   1. Open **Settings Manager → Keyboard → Application Shortcuts**
   2. Click **Add**, enter `/usr/local/bin/grec` as the command
@@ -169,6 +203,7 @@ Exiting normally, received signal 15
 
 Ensure FFmpeg is installed and working:
 ffmpeg -version
+ffmpeg -encoders | grep libx264  # Should show x264 if properly configured
 
 To see detected audio sources:
 pactl list sources | grep -E "Name:|device.class"
@@ -194,6 +229,13 @@ ETH: 0x5f1ed610a96c648478a775644c9244bf4e78631e
 * * *
 
 ## Changelog
+
+### v2.1 (February 2026)
+  * **Facebook compatibility**: Switched from mpeg4 to H.264 (libx264) codec for MP4 recordings
+  * **Even dimensions fix**: Added scale filter to handle odd-sized region selections (required for H.264)
+  * **Optimized encoding**: Added `-preset fast` and `-crf 23` for perfect quality/performance balance
+  * **Taskbar fix**: Changed recording indicator to popup window with `GTK_WINDOW_POPUP`
+  * **Focus prevention**: Added `gtk_window_set_accept_focus(FALSE)` to stop indicator from stealing focus
 
 ### v2.0 (February 2026)
   * Added standalone preferences application (`grec_prefs`)
