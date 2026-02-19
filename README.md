@@ -52,13 +52,10 @@ It is designed for desktop environments like XFCE, providing a quick and lightwe
 ### Gentoo example:
 ```
 sudo emerge media-video/ffmpeg dev-libs/gtk+:3.0 x11-libs/libX11 media-sound/pulseaudio
-<<<<<<< HEAD
 # Make sure x264 USE flag is enabled for ffmpeg:
 echo "media-video/ffmpeg x264" | sudo tee -a /etc/portage/package.use/ffmpeg
 sudo emerge --ask --newuse media-video/ffmpeg
-=======
 ```
->>>>>>> 7a5b76689f0ef9fa46d8d268dd878df541d909d9
 
 ### Ubuntu/Debian example:
 ```
@@ -162,11 +159,7 @@ show_notifications=true
   4. Set command to `/usr/local/bin/grec_prefs`
   5. Choose an icon (e.g., `gtk-preferences`)
 
-<<<<<<< HEAD
-  OR
-=======
 OR
->>>>>>> 7a5b76689f0ef9fa46d8d268dd878df541d909d9
 
 ### Add to Application's Menu
   1. Ensure /usr/local/bin/grec_prefs exists
