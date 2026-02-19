@@ -50,13 +50,20 @@ It is designed for desktop environments like XFCE, providing a quick and lightwe
   * **Optional but recommended**: `pulseaudio-utils` (provides `pactl` for audio source detection)
 
 ### Gentoo example:
+```
 sudo emerge media-video/ffmpeg dev-libs/gtk+:3.0 x11-libs/libX11 media-sound/pulseaudio
+<<<<<<< HEAD
 # Make sure x264 USE flag is enabled for ffmpeg:
 echo "media-video/ffmpeg x264" | sudo tee -a /etc/portage/package.use/ffmpeg
 sudo emerge --ask --newuse media-video/ffmpeg
+=======
+```
+>>>>>>> 7a5b76689f0ef9fa46d8d268dd878df541d909d9
 
 ### Ubuntu/Debian example:
+```
 sudo apt install ffmpeg libgtk-3-dev libx11-dev pulseaudio-utils
+```
 
 * * *
 
@@ -155,7 +162,11 @@ show_notifications=true
   4. Set command to `/usr/local/bin/grec_prefs`
   5. Choose an icon (e.g., `gtk-preferences`)
 
+<<<<<<< HEAD
   OR
+=======
+OR
+>>>>>>> 7a5b76689f0ef9fa46d8d268dd878df541d909d9
 
 ### Add to Application's Menu
   1. Ensure /usr/local/bin/grec_prefs exists
@@ -224,6 +235,7 @@ GREC was created by BigSlimThic, a hopelessly broke digital low-life who somehow
 Help fund his lifelong quest to buy an ergonomic chair, a better Wi-Fi router, and possibly a vacation somewhere that isn't just his imagination.
 
 BTC: 3GtCgHhMP7NTxsdNjcDs7TUNSBK6EXoAzz
+
 ETH: 0x5f1ed610a96c648478a775644c9244bf4e78631e
 
 * * *
