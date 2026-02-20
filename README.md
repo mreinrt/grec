@@ -239,7 +239,7 @@ ETH: 0x5f1ed610a96c648478a775644c9244bf4e78631e
 ## Changelog
 
 ### v2.1 (February 2026)
-  * **Facebook compatibility**: Switched from mpeg4 to H.264 (libx264) codec for MP4 recordings
+  * **Social media compatibility**: Switched from mpeg4 to H.264 (libx264) codec for MP4 recordings
   * **Even dimensions fix**: Added scale filter to handle odd-sized region selections (required for H.264)
   * **Optimized encoding**: Added `-preset fast` and `-crf 23` for perfect quality/performance balance
   * **Taskbar fix**: Changed recording indicator to popup window with `GTK_WINDOW_POPUP`
